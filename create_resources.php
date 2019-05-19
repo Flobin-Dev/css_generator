@@ -18,7 +18,6 @@ function create_resources($pngs)
         $image["width"] = imagesx($image["resource"]);
         $max_width += $image["width"];
         array_push($resources, $image);
-
     }
     array_push($resources, $max_width);
     array_push($resources, $max_height);

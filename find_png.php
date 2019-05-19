@@ -1,9 +1,14 @@
 <?php
 
-function find_png()
+function find_png($from = ".")
 {
+    if(!is_dir($from))
+    {
+        echo "There is no such directory.\n";
+        exit(84);
+    }
     $pngs = array();
-    if ($handle = opendir('.'))
+    if ($handle = opendir($from))
     {
         while (false !== ($entry = readdir($handle)))
         {
@@ -11,7 +16,8 @@ function find_png()
             {
                 if(strpos($entry, ".png") == TRUE)
                 {
-                    array_push($pngs, $entry);
+                    $path = $from . "/" . $entry;
+                    array_push($pngs, $path);
                 }
             }
         }
@@ -20,15 +26,19 @@ function find_png()
     return($pngs);
 }
 
-function find_png_recursive()
+function find_png_recursive($from = ".")
 {
     $pngs = array();
-    find_png2($pngs);
+    find_png2($pngs, $from);
     return $pngs;
 }
 
-function find_png2(&$pngs, $from = ".")
+function find_png2(&$pngs, $from)
 {
+    if(!is_dir($from)){
+        echo "There is no such directory.\n";
+        exit(84);
+    }
     if ($handle = opendir($from))
     {
         while (($file = readdir($handle)) !== FALSE)
